@@ -1,3 +1,7 @@
+// chrome-extension-template
+// This script is not currently used, but is required by the manifest.
+// It could be used in the future to store scraped data or handle other background tasks.
+
 chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.sync.set({ color: '#3aa757' }, () => {
     console.log('Default background color set to green.');
