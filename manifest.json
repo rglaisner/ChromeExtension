@@ -1,5 +1,6 @@
 {
   "manifest_version": 3,
+// chrome-extension-template
   "name": "LinkedIn Profile Scraper",
   "version": "1.0.0",
   "description": "A Chrome extension to scrape LinkedIn profile information.",
@@ -9,6 +10,14 @@
   ],
   "host_permissions": [
     "*://*.linkedin.com/*"
+  ],
+  "name": "Chrome Extension Starter",
+  "version": "1.0.0",
+  "description": "A starter template for a Chrome extension.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
   ],
   "action": {
     "default_popup": "popup.html",
@@ -23,7 +32,9 @@
   },
   "content_scripts": [
     {
+// chrome-extension-template
       "matches": ["*://*.linkedin.com/in/*"],
+      "matches": ["<all_urls>"],
       "js": ["content.js"]
     }
   ],

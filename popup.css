@@ -1,4 +1,5 @@
 body {
+// chrome-extension-template
   width: 300px;
   font-family: sans-serif;
   padding: 10px;
@@ -22,4 +23,11 @@ button {
   padding: 10px;
   white-space: pre-wrap;
   font-family: monospace;
+  width: 200px;
+  text-align: center;
+  padding: 10px;
+}
+
+button {
+  cursor: pointer;
 }
