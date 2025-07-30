@@ -1,4 +1,5 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+
   if (request.action === "scrape_profile") {
     try {
       const rawData = scrapeRawData();
@@ -11,6 +12,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 function scrapeRawData() {
+
   // NOTE: These selectors are guesses and may need to be updated if LinkedIn changes its layout.
   const nameSelector = 'h1.text-heading-xlarge';
   const titleSelector = 'div.text-body-medium.break-words';
@@ -44,6 +46,7 @@ function scrapeRawData() {
       }
     }
     return null;
+
   };
 
   const getExperience = (selector) => {
@@ -113,3 +116,4 @@ function transformData(rawData) {
     averageRoleDuration: averageRoleDuration.toFixed(2) + ' years'
   });
 }
+
