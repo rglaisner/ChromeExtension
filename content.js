@@ -1,11 +1,16 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "scrape_profile") {
-    const profileData = scrapeProfile();
-    sendResponse(profileData);
+    try {
+      const rawData = scrapeRawData();
+      const profileData = transformData(rawData);
+      sendResponse({ success: true, data: profileData });
+    } catch (error) {
+      sendResponse({ success: false, error: error.message });
+    }
   }
 });
 
-function scrapeProfile() {
+function scrapeRawData() {
   // NOTE: These selectors are guesses and may need to be updated if LinkedIn changes its layout.
   const nameSelector = 'h1.text-heading-xlarge';
   const titleSelector = 'div.text-body-medium.break-words';
@@ -41,26 +46,16 @@ function scrapeProfile() {
     return null;
   };
 
-  const calculateDuration = (dateRange) => {
-    if (!dateRange) return null;
-    const parts = dateRange.split('·');
-    if (parts.length < 2) return null;
-    const durationStr = parts[1].trim();
-    return durationStr;
-  };
-
   const getExperience = (selector) => {
     const experienceEntries = [];
-    let totalDuration = 0;
     document.querySelectorAll(selector).forEach((item) => {
       const title = item.querySelector('span.mr1 > span[aria-hidden="true"]')?.innerText.trim();
       const company = item.querySelector('span.t-14.t-normal > span[aria-hidden="true"]')?.innerText.trim().replace('Full-time', '').trim();
       const dateRange = item.querySelector('span.t-14.t-normal.t-black--light > span[aria-hidden="true"]')?.innerText.trim();
       const description = item.querySelector('div.display-flex.align-items-center.t-14.t-normal.t-black > span[aria-hidden="true"]')?.innerText.trim();
-      const duration = calculateDuration(dateRange);
 
       if (title && company && dateRange) {
-        experienceEntries.push({ title, company, dateRange, description, duration });
+        experienceEntries.push({ title, company, dateRange, description });
       }
     });
     return experienceEntries;
@@ -79,19 +74,42 @@ function scrapeProfile() {
     return educationEntries;
   };
 
-  const experience = getExperience(experienceSelector);
-  const averageRoleDuration = experience.length > 0 ? experience.reduce((acc, exp) => acc + (exp.duration || 0), 0) / experience.length : 0;
+  const name = getTextContent(nameSelector);
+  if (!name) {
+    throw new Error("Could not find the profile name. Are you on a LinkedIn profile page?");
+  }
 
-  const profileData = {
-    name: getTextContent(nameSelector),
+  return {
+    name: name,
     title: getTextContent(titleSelector),
     about: getTextContent(aboutSelector),
-    experience: experience,
+    experience: getExperience(experienceSelector),
     education: getEducation(educationSelector),
     skills: getSkills(skillsSelector),
     connections: getConnections(connectionsSelector),
-    averageRoleDuration: averageRoleDuration.toFixed(2) + ' years'
+  };
+}
+
+function transformData(rawData) {
+  const calculateDuration = (dateRange) => {
+    if (!dateRange) return null;
+    const parts = dateRange.split('·');
+    if (parts.length < 2) return null;
+    const durationStr = parts[1].trim();
+    return durationStr;
   };
 
-  return profileData;
+  const experienceWithDuration = rawData.experience.map(exp => ({
+    ...exp,
+    duration: calculateDuration(exp.dateRange)
+  }));
+
+  const totalDuration = experienceWithDuration.reduce((acc, exp) => acc + (exp.duration || 0), 0);
+  const averageRoleDuration = rawData.experience.length > 0 ? totalDuration / rawData.experience.length : 0;
+
+  return new Profile({
+    ...rawData,
+    experience: experienceWithDuration,
+    averageRoleDuration: averageRoleDuration.toFixed(2) + ' years'
+  });
 }
