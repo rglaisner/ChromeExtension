@@ -1,33 +1,131 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-// chrome-extension-template
-  width: 300px;
-  font-family: sans-serif;
-  padding: 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f2f5;
+    padding: 15px;
+    width: 500px;
 }
 
-h1 {
-  font-size: 1.2em;
-  text-align: center;
+.battlecard {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
-button {
-  width: 100%;
-  padding: 10px;
-  font-size: 1em;
-  cursor: pointer;
-  margin-bottom: 10px;
+.header {
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    color: white;
+    padding: 20px;
+    text-align: center;
 }
 
-#profileData {
-  border: 1px solid #ccc;
-  padding: 10px;
-  white-space: pre-wrap;
-  font-family: monospace;
-  width: 200px;
-  text-align: center;
-  padding: 10px;
+.header h1 {
+    font-size: 1.5em;
+    margin-bottom: 5px;
 }
 
-button {
-  cursor: pointer;
+.header .subtitle {
+    font-size: 1em;
+    opacity: 0.9;
+}
+
+.content {
+    padding: 20px;
+}
+
+.section {
+    margin-bottom: 20px;
+}
+
+.section h2 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 5px;
+}
+
+.icon {
+    font-size: 1.2em;
+}
+
+.metric {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+    padding: 5px 0;
+}
+
+.metric-label {
+    font-weight: 600;
+    color: #555;
+}
+
+.metric-value {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.timeline {
+    position: relative;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 5px;
+    border-left: 3px solid #3498db;
+}
+
+.timeline-title {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.timeline-subtitle {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.skill-card {
+    background: #e3f2fd;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    color: #2c3e50;
+}
+
+#scrapeBtn {
+    width: calc(100% - 40px);
+    padding: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    margin: 0 20px 20px 20px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+#scrapeBtn:hover {
+    background: #2980b9;
+
 }

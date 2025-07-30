@@ -1,20 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-// chrome-extension-template
-  <title>LinkedIn Profile Scraper</title>
-  <link rel="stylesheet" type="text/css" href="popup.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Battlecard</title>
+    <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <h1>LinkedIn Profile Scraper</h1>
-  <button id="scrapeBtn">Scrape Profile</button>
-  <div id="profileData"></div>
-  <title>Chrome Extension Starter</title>
-  <link rel="stylesheet" type="text/css" href="popup.css">
-</head>
-<body>
-  <h1>Chrome Extension Starter</h1>
-  <button id="changeColor">Change Color</button>
-  <script src="popup.js"></script>
+    <div class="battlecard">
+        <div class="header">
+            <h1 id="name"></h1>
+            <p id="title" class="subtitle"></p>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2><span class="icon">🎯</span>Career Trajectory Analysis</h2>
+                <div class="metric">
+                    <span class="metric-label">Average Role Duration</span>
+                    <span id="avgRoleDuration" class="metric-value"></span>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2><span class="icon">🌐</span>Network & Influence</h2>
+                <div class="metric">
+                    <span class="metric-label">LinkedIn Network Size</span>
+                    <span id="connections" class="metric-value"></span>
+                </div>
+            </div>
+
+            <div class="section full-width">
+                <h2><span class="icon">📝</span>About</h2>
+                <p id="about"></p>
+            </div>
+
+            <div class="section full-width">
+                <h2><span class="icon">💼</span>Experience</h2>
+                <div id="experience" class="timeline"></div>
+            </div>
+
+            <div class="section full-width">
+                <h2><span class="icon">🎓</span>Education</h2>
+                <div id="education" class="timeline"></div>
+            </div>
+
+            <div class="section full-width">
+                <h2><span class="icon">🚀</span>Skills</h2>
+                <div id="skills" class="skills-grid"></div>
+            </div>
+        </div>
+        <button id="scrapeBtn">Scrape Profile</button>
+    </div>
+    <script src="popup.js"></script>
 </body>
 </html>
